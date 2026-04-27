@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaMed Snack – Fast, Delicious & Affordable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --accent: #ff4500;
+    --accent2: #ff6a2f;
+    --gold: #f5c842;
+    --text: #f0ece4;
+    --text2: #9e9a93;
+    --card: #161616;
+    --border: rgba(255,255,255,0.07);
+    --radius: 18px;
+    --nav-h: 68px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--text);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--text2);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.88rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cart-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.88rem;
+    transition: background 0.2s, transform 0.15s;
+    position: relative;
+  }
+  .nav-cart-btn:hover { background: var(--accent2); transform: scale(1.03); }
+  .cart-badge {
+    position: absolute; top: -8px; right: -8px;
+    background: var(--gold); color: #000;
+    font-size: 0.7rem; font-weight: 700;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0);
+    transition: all 0.2s;
+  }
+  .cart-badge.show { opacity: 1; transform: scale(1); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: var(--nav-h) 5% 60px;
+    text-align: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,69,0,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 30%, rgba(245,200,66,0.08) 0%, transparent 60%),
+      linear-gradient(to bottom, #0a0a0a 0%, #130a06 100%);
+    z-index: 0;
+  }
+  .hero-food-strip {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 45%;
+    display: flex; align-items: flex-end; justify-content: center;
+    gap: 0;
+    overflow: hidden;
+    mask-image: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 100%);
+    z-index: 1;
+  }
+  .hero-food-strip .food-img {
+    width: 200px; height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.06);
+    margin: 0 -20px;
+    filter: brightness(0.6) saturate(1.2);
+    transition: filter 0.4s;
+  }
+  .hero-food-strip .food-img:hover { filter: brightness(0.9) saturate(1.4); }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,69,0,0.15);
+    border: 1px solid rgba(255,69,0,0.3);
+    color: var(--accent2);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: 4px;
+    animation: fadeUp 0.7s 0.1s ease both;
+    margin-bottom: 10px;
+  }
+  .hero-title em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+    font-size: 0.5em;
+    letter-spacing: 8px;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text2);
+    font-weight: 300;
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s 0.2s ease both;
+    max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-ctas {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+    margin-bottom: 40px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 8px 32px rgba(255,69,0,0.35);
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,69,0,0.45); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--accent); background: rgba(255,69,0,0.08); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    display: block;
+  }
+  .hero-stat small { color: var(--text2); font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 100px 5%; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .section-sub { color: var(--text2); max-width: 480px; font-weight: 300; }
+
+  /* ─── MENU ─── */
+  #menu { background: var(--bg2); }
+  .menu-header { text-align: center; margin-bottom: 50px; }
+  .menu-header .section-sub { margin: 0 auto; }
+
+  .category-tabs {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 48px;
+  }
+  .tab-btn {
+    background: var(--card);
+    color: var(--text2);
+    border: 1.5px solid var(--border);
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .tab-btn:hover { border-color: rgba(255,69,0,0.5); color: var(--text); }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tab-btn .tab-icon { font-size: 1.1rem; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 22px;
+  }
+  .food-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    display: flex; flex-direction: column;
+    animation: fadeUp 0.5s ease both;
+  }
+  .food-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border-color: rgba(255,69,0,0.25);
+  }
+  .food-card-img {
+    width: 100%; height: 200px;
+    object-fit: cover;
+    position: relative;
+    background: #1a1a1a;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .food-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .food-card:hover .food-card-img img { transform: scale(1.07); }
+  .food-card-img .badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+  }
+  .food-card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .food-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .food-desc { color: var(--text2); font-size: 0.82rem; line-height: 1.5; flex: 1; }
+  .food-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .food-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .food-price small { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text2); font-weight: 400; }
+  .qty-control {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .qty-btn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    line-height: 1;
+  }
+  .qty-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .qty-num { font-weight: 700; font-size: 0.95rem; min-width: 20px; text-align: center; }
+  .add-cart-btn {
+    width: 100%;
+    background: rgba(255,69,0,0.12);
+    color: var(--accent2);
+    border: 1.5px solid rgba(255,69,0,0.25);
+    padding: 11px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .add-cart-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: scale(1.02); }
+  .add-cart-btn.added { background: #1a3d1a; color: #4caf50; border-color: #4caf50; }
+
+  /* ─── CART DRAWER ─── */
+  .cart-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(4px);
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: min(420px, 100vw);
+    background: var(--bg3);
+    border-left: 1px solid var(--border);
+    z-index: 2001;
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .cart-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; }
+  .close-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: none; cursor: pointer;
+    color: var(--text);
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .close-btn:hover { background: rgba(255,255,255,0.14); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 16px; }
+  .cart-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px;
+    background: var(--card);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+  }
+  .cart-item-img {
+    width: 64px; height: 64px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: #222;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+  .cart-item-price { color: var(--gold); font-weight: 700; font-size: 0.95rem; }
+  .cart-item-ctrl { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .cart-item-ctrl .qty-btn { width: 26px; height: 26px; font-size: 0.95rem; }
+  .cart-item-ctrl .qty-num { font-size: 0.85rem; }
+  .cart-rm-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255,69,0,0.1);
+    border: none; cursor: pointer;
+    color: var(--accent);
+    font-size: 0.8rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    margin-left: auto;
+  }
+  .cart-rm-btn:hover { background: rgba(255,69,0,0.25); }
+  .cart-empty { text-align: center; padding: 60px 20px; color: var(--text2); }
+  .cart-empty .empty-icon { font-size: 3.5rem; margin-bottom: 14px; opacity: 0.5; }
+  .cart-footer {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .cart-total {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .cart-total .label { font-weight: 600; color: var(--text2); }
+  .cart-total .amount { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 1px; }
+  .btn-whatsapp {
+    width: 100%;
+    background: #25D366;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .btn-whatsapp:hover { background: #20ba58; transform: scale(1.01); }
+  .btn-glovo {
+    width: 100%;
+    background: rgba(255,193,7,0.1);
+    color: #ffc107;
+    border: 1.5px solid rgba(255,193,7,0.3);
+    padding: 13px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-glovo:hover { background: rgba(255,193,7,0.18); transform: scale(1.01); }
+
+  /* ─── REVIEWS ─── */
+  #reviews { background: var(--bg); }
+  .reviews-header { text-align: center; margin-bottom: 50px; }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .review-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .review-card:hover { transform: translateY(-4px); border-color: rgba(245,200,66,0.2); }
+  .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+  .review-text { color: var(--text2); font-size: 0.9rem; line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .review-name { font-weight: 600; font-size: 0.9rem; }
+  .review-location { color: var(--text2); font-size: 0.78rem; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--bg2); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 28px; }
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex; align-items: center; gap: 18px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .contact-card:hover { transform: translateX(4px); border-color: rgba(255,69,0,0.3); }
+  .contact-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    background: rgba(255,69,0,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .contact-label { font-size: 0.75rem; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .contact-val { font-weight: 600; font-size: 1rem; color: var(--text); }
+  .map-placeholder {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 320px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--text2);
+    position: relative;
+  }
+  .map-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: 
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px);
+  }
+  .map-pin { font-size: 3rem; position: relative; z-index: 1; }
+  .map-text { position: relative; z-index: 1; text-align: center; }
+  .map-text strong { display: block; color: var(--text); font-size: 1rem; margin-bottom: 4px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #060606;
+    border-top: 1px solid var(--border);
+    padding: 40px 5%;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 2px; }
+  .footer-logo span { color: var(--accent); }
+  footer p { color: var(--text2); font-size: 0.82rem; }
+  .footer-socials { display: flex; gap: 12px; }
+  .footer-socials a {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .footer-socials a:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE NAV ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: rgba(10,10,10,0.97); backdrop-filter: blur(18px); padding: 20px 5%; gap: 16px; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    section { padding: 70px 5%; }
+    .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+    footer { flex-direction: column; text-align: center; }
+    .hero-food-strip { display: none; }
+  }
+  @media (max-width: 480px) {
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-outline { width: 100%; max-width: 280px; justify-content: center; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,69,0,0.4); border-radius: 4px; }
+
+  /* Notification */
+  .toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--card);
+    border: 1px solid rgba(76,175,80,0.4);
+    color: #4caf50;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    z-index: 3000;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">Mega<span>Med</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cart-btn" onclick="openCart()">
+    🛒 Cart
+    <span class="cart-badge" id="cartBadge">0</span>
+  </button>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-food-strip">
+    <img class="food-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&h=300&fit=crop" alt="pizza">
+    <img class="food-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=300&fit=crop" alt="burger">
+    <img class="food-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300&h=300&fit=crop" alt="tacos">
+    <img class="food-img" src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=300&h=300&fit=crop" alt="chicken">
+    <img class="food-img" src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&h=300&fit=crop" alt="sandwich">
+    <img class="food-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=300&h=300&fit=crop" alt="food2">
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">📍 Kenitra — Open Now</span>
+    <h1 class="hero-title">
+      MegaMed
+      <em>Snack</em>
+    </h1>
+    <p class="hero-sub">Fast, <strong>Delicious</strong> & Affordable — Order fresh food delivered hot to your door</p>
+    <div class="hero-ctas">
+      <a href="#menu" class="btn-primary">🍕 Order Now</a>
+      <a href="#contact" class="btn-outline">📞 Call Us</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">500+</span><small>Happy Clients</small></div>
+      <div class="hero-stat"><span class="num">6</span><small>Categories</small></div>
+      <div class="hero-stat"><span class="num">30min</span><small>Delivery</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header reveal">
+    <p class="section-label">🍔 Our Menu</p>
+    <h2 class="section-title">Pick Your Favourite</h2>
+    <p class="section-sub">Fresh ingredients, big flavours — choose from our hand-crafted menu</p>
+  </div>
+  <div class="category-tabs reveal" id="categoryTabs"></div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-header reveal">
+    <p class="section-label">⭐ Testimonials</p>
+    <h2 class="section-title">What Customers Say</h2>
+    <p class="section-sub" style="margin:0 auto;">Hundreds of satisfied customers across Kenitra love MegaMed.</p>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div>
+      <p class="section-label reveal">📞 Get In Touch</p>
+      <h2 class="section-title reveal">Find Us &<br>Call Us</h2>
+      <div class="contact-info" id="contactInfo">
+        <div class="contact-card reveal">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-val"><a href="tel:0717989955" style="color:inherit;text-decoration:none;">0717 989 955</a></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-icon">💬</div>
+          <div>
+            <div class="contact-label">WhatsApp</div>
+            <div class="contact-val"><a href="https://wa.me/212717989955" style="color:#25D366;text-decoration:none;">Chat with us now →</a></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Opening Hours</div>
+            <div class="contact-val">Every day · 10:00 – 23:00</div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Location</div>
+            <div class="contact-val">Kenitra, Morocco</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map-placeholder reveal">
+      <div class="map-pin">📍</div>
+      <div class="map-text">
+        <strong>MegaMed Snack</strong>
+        Kenitra, Morocco
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Mega<span>Med</span></div>
+  <p>© 2025 MegaMed Snack. All rights reserved.</p>
+  <div class="footer-socials">
+    <a href="https://wa.me/212717989955" title="WhatsApp">💬</a>
+    <a href="tel:0717989955" title="Call">📞</a>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h2>🛒 Your Cart</h2>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="label">Total</span>
+      <span class="amount" id="cartTotal">0 MAD</span>
+    </div>
+    <button class="btn-whatsapp" onclick="orderWhatsApp()">💬 Order via WhatsApp</button>
+    <a class="btn-glovo" href="#" target="_blank">🛵 Order via Glovo</a>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const categories = [
+  { id: 'all',     label: 'All',         icon: '🍽️' },
+  { id: 'pizza',   label: 'Pizza',       icon: '🍕' },
+  { id: 'chicken', label: 'Crispy Chicken', icon: '🍗' },
+  { id: 'tacos',   label: 'Tacos',       icon: '🌮' },
+  { id: 'pasticcio', label: 'Pasticcio', icon: '🥧' },
+  { id: 'burger',  label: 'Burger',      icon: '🍔' },
+  { id: 'sandwich',label: 'Sandwich Mega', icon: '🥪' },
+];
+
+const menuItems = [
+  // PIZZA
+  { id:1, cat:'pizza', name:'Margherita Classique', desc:'Tomato sauce, fresh mozzarella, basil, olive oil drizzle', price:45, badge:'Popular', img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:2, cat:'pizza', name:'Pizza 4 Fromages', desc:'Mozzarella, cheddar, gouda, parmesan on creamy base', price:55, badge:'Chef\'s Pick', img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
+  { id:3, cat:'pizza', name:'Pizza Viande Hachée', desc:'Spiced ground meat, peppers, onions & tomato sauce', price:50, img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop' },
+
+  // CHICKEN
+  { id:4, cat:'chicken', name:'Crispy Chicken Box', desc:'Golden fried chicken thighs, coleslaw & spicy sauce', price:42, badge:'Best Seller', img:'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=250&fit=crop' },
+  { id:5, cat:'chicken', name:'Chicken Strips Combo', desc:'6 strips with dip sauce, fries & drink', price:55, img:'https://images.unsplash.com/photo-1562802378-063ec186a863?w=400&h=250&fit=crop' },
+  { id:6, cat:'chicken', name:'Spicy Crispy Burger', desc:'Crispy chicken fillet, jalapeños, sriracha mayo', price:48, badge:'Spicy 🌶️', img:'https://images.unsplash.com/photo-1614398751058-eb2e0bf63e53?w=400&h=250&fit=crop' },
+
+  // TACOS
+  { id:7, cat:'tacos', name:'Tacos Viande', desc:'Flour tortilla, spiced beef, fries, cheese sauce, veggies', price:35, badge:'Value', img:'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=250&fit=crop' },
+  { id:8, cat:'tacos', name:'Tacos Poulet', desc:'Grilled chicken, mixed peppers, garlic sauce, fries', price:35, badge:'Popular', img:'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&h=250&fit=crop' },
+  { id:9, cat:'tacos', name:'Maxi Tacos', desc:'Double filling, double cheese, loaded with fries', price:45, img:'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=400&h=250&fit=crop' },
+
+  // PASTICCIO
+  { id:10, cat:'pasticcio', name:'Pasticcio Classic', desc:'Layers of pasta, béchamel, spiced meat & cheese topping', price:50, badge:'Signature', img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=250&fit=crop' },
+  { id:11, cat:'pasticcio', name:'Pasticcio Poulet', desc:'Chicken filling, mushrooms, creamy béchamel', price:52, img:'https://images.unsplash.com/photo-1611270629569-8b357cb88da9?w=400&h=250&fit=crop' },
+
+  // BURGER
+  { id:12, cat:'burger', name:'MegaMed Classic Burger', desc:'Smash beef patty, cheddar, pickles, special sauce, brioche bun', price:45, badge:'Our Classic', img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=250&fit=crop' },
+  { id:13, cat:'burger', name:'Double Smash', desc:'Two smash patties, double cheese, caramelised onions', price:60, badge:'XXL', img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&h=250&fit=crop' },
+  { id:14, cat:'burger', name:'Veggie Burger', desc:'Plant-based patty, avocado, fresh tomato, tahini sauce', price:40, img:'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&h=250&fit=crop' },
+
+  // SANDWICH
+  { id:15, cat:'sandwich', name:'Sandwich Mega Viande', desc:'Baguette, grilled beef, harissa, veggies, fries inside', price:30, badge:'Best Deal', img:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=250&fit=crop' },
+  { id:16, cat:'sandwich', name:'Sandwich Mega Poulet', desc:'Baguette, grilled chicken, mayo, lettuce, tomato, fries', price:28, img:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=400&h=250&fit=crop' },
+  { id:17, cat:'sandwich', name:'Sandwich Mixte', desc:'Egg, kefta, cheese & fresh veggies — fully loaded', price:32, img:'https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400&h=250&fit=crop' },
+];
+
+const reviews = [
+  { name:'Youssef A.', loc:'Kenitra', stars:5, text:'Best tacos in the city! Fast delivery and always hot. MegaMed is my go-to every week.' },
+  { name:'Fatima Z.', loc:'Kenitra', stars:5, text:'The crispy chicken is absolutely incredible. Crispy on the outside, juicy inside. Worth every dirham!' },
+  { name:'Mohamed K.', loc:'Kenitra', stars:5, text:'Ordered the double smash burger and it was fire 🔥. Great quality at a great price. Highly recommend!' },
+  { name:'Sara B.', loc:'Kenitra', stars:5, text:'The pasticcio is so comforting and delicious. Generous portions and good price. Will order again!' },
+  { name:'Hamid T.', loc:'Kenitra', stars:4, text:'Sandwich mega is a classic — filling, tasty and affordable. My lunch spot every day near work.' },
+  { name:'Nora R.', loc:'Kenitra', stars:5, text:'Ordered via WhatsApp, was super easy. Food arrived in 25 min and everything was perfect. 👏' },
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let cart = [];
+let activeCategory = 'all';
+let quantities = {}; // per card qty selector
+
+// ─── RENDER TABS ─────────────────────────────────────────────────────────────
+function renderTabs() {
+  const el = document.getElementById('categoryTabs');
+  el.innerHTML = categories.map(c => `
+    <button class="tab-btn ${c.id === activeCategory ? 'active' : ''}" onclick="setCategory('${c.id}')">
+      <span class="tab-icon">${c.icon}</span>${c.label}
+    </button>
+  `).join('');
+}
+
+function setCategory(id) {
+  activeCategory = id;
+  renderTabs();
+  renderMenu();
+}
+
+// ─── RENDER MENU ─────────────────────────────────────────────────────────────
+function renderMenu() {
+  const items = activeCategory === 'all' ? menuItems : menuItems.filter(i => i.cat === activeCategory);
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = items.map((item, idx) => {
+    const q = quantities[item.id] || 1;
+    return `
+    <div class="food-card" style="animation-delay:${idx * 0.06}s">
+      <div class="food-card-img">
+        <img src="${item.img}" alt="${item.name}" loading="lazy">
+        ${item.badge ? `<span class="badge">${item.badge}</span>` : ''}
+      </div>
+      <div class="food-card-body">
+        <div class="food-name">${item.name}</div>
+        <div class="food-desc">${item.desc}</div>
+        <div class="food-bottom">
+          <div class="food-price">${item.price} <small>MAD</small></div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+            <span class="qty-num" id="qty-${item.id}">${q}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+        <button class="add-cart-btn" id="addbtn-${item.id}" onclick="addToCart(${item.id})">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function changeQty(id, delta) {
+  quantities[id] = Math.max(1, (quantities[id] || 1) + delta);
+  const el = document.getElementById(`qty-${id}`);
+  if (el) el.textContent = quantities[id];
+}
+
+// ─── CART ────────────────────────────────────────────────────────────────────
+function addToCart(id) {
+  const item = menuItems.find(i => i.id === id);
+  const qty = quantities[id] || 1;
+  const existing = cart.find(c => c.id === id);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({ ...item, qty });
+  }
+  quantities[id] = 1;
+  const qtyEl = document.getElementById(`qty-${id}`);
+  if (qtyEl) qtyEl.textContent = 1;
+
+  // Flash button
+  const btn = document.getElementById(`addbtn-${id}`);
+  if (btn) {
+    btn.classList.add('added');
+    btn.textContent = '✓ Added!';
+    setTimeout(() => { btn.classList.remove('added'); btn.textContent = '🛒 Add to Cart'; }, 1500);
+  }
+  updateCartUI();
+  showToast(`✓ ${item.name} added to cart`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCartUI();
+  renderCartItems();
+}
+
+function changeCartQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  updateCartUI();
+  renderCartItems();
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = count;
+  badge.classList.toggle('show', count > 0);
+  document.getElementById('cartTotal').textContent = `${total} MAD`;
+  document.getElementById('cartFooter').style.display = cart.length ? 'block' : 'none';
+}
+
+function renderCartItems() {
+  const el = document.getElementById('cartItems');
+  if (!cart.length) {
+    el.innerHTML = `<div class="cart-empty"><div class="empty-icon">🛒</div><p>Your cart is empty</p><p style="font-size:0.8rem;margin-top:6px">Browse the menu and add items!</p></div>`;
+    return;
+  }
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${item.price * item.qty} MAD</div>
+        <div class="cart-item-ctrl">
+          <button class="qty-btn" onclick="changeCartQty(${item.id}, -1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeCartQty(${item.id}, 1)">+</button>
+          <button class="cart-rm-btn" onclick="removeFromCart(${item.id})">✕</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openCart() {
+  renderCartItems();
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─── WHATSAPP ORDER ─────────────────────────────────────────────────────────
+function orderWhatsApp() {
+  if (!cart.length) return;
+  const lines = cart.map(i => `• ${i.name} x${i.qty} = ${i.price * i.qty} MAD`).join('\n');
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const msg = encodeURIComponent(`🍕 *MegaMed Snack Order*\n\n${lines}\n\n*Total: ${total} MAD*\n\nMerci! 🙏`);
+  window.open(`https://wa.me/212717989955?text=${msg}`, '_blank');
+}
+
+// ─── REVIEWS ─────────────────────────────────────────────────────────────────
+function renderReviews() {
+  const el = document.getElementById('reviewsGrid');
+  el.innerHTML = reviews.map((r, i) => `
+    <div class="review-card reveal" style="transition-delay:${i*0.08}s">
+      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
+      <p class="review-text">"${r.text}"</p>
+      <div class="review-author">
+        <div class="review-avatar">${r.name[0]}</div>
+        <div>
+          <div class="review-name">${r.name}</div>
+          <div class="review-location">📍 ${r.loc}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ─── NAV MOBILE ──────────────────────────────────────────────────────────────
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+// ─── SCROLL REVEAL ───────────────────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+
+function observeReveal() {
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+renderTabs();
+renderMenu();
+renderReviews();
+setTimeout(observeReveal, 100);
+</script>
+</body>
+</html>
