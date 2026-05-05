@@ -679,7 +679,7 @@
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num">500+</span><small>Happy Clients</small></div>
-      <div class="hero-stat"><span class="num">6</span><small>Categories</small></div>
+      <div class="hero-stat"><span class="num">7</span><small>Categories</small></div>
       <div class="hero-stat"><span class="num">30min</span><small>Delivery</small></div>
     </div>
   </div>
@@ -772,18 +772,17 @@
   </div>
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-footer" id="cartFooter" style="display:none">
-  <div class="cart-total">
-    <span class="label">Total</span>
-    <span class="amount" id="cartTotal">0 MAD</span>
+    <div class="cart-total">
+      <span class="label">Total</span>
+      <span class="amount" id="cartTotal">0 DH</span>
+    </div>
+    <button class="btn-whatsapp" onclick="orderWhatsApp()">
+      💬 Order via WhatsApp (Alliance • Kasba • Mehdia 🚀)
+    </button>
+    <a class="btn-glovo" href="#" target="_blank">
+      🛵 Order via Glovo (Other areas)
+    </a>
   </div>
-
-  <button class="btn-whatsapp" onclick="orderWhatsApp()">
-    💬 Order via WhatsApp (Alliance • Kasba • Mehdia 🚀)
-  </button>
-
-  <a class="btn-glovo" href="#" target="_blank">
-    🛵 Order via Glovo (Other areas)
-  </a>
 </div>
 
 <!-- TOAST -->
@@ -792,59 +791,94 @@
 <script>
 // ─── DATA ───────────────────────────────────────────────────────────────────
 const categories = [
-  { id: 'all',     label: 'All',         icon: '🍽️' },
-  { id: 'pizza',   label: 'Pizza',       icon: '🍕' },
-  { id: 'chicken', label: 'Crispy Chicken', icon: '🍗' },
-  { id: 'tacos',   label: 'Tacos',       icon: '🌮' },
+  { id: 'all',       label: 'All',        icon: '🍽️' },
+  { id: 'tacos',     label: 'Tacos',      icon: '🌮' },
+  { id: 'sandwich',  label: 'Sandwiches', icon: '🥖' },
+  { id: 'panini',    label: 'Panini',     icon: '🫓' },
+  { id: 'pizza',     label: 'Pizza',      icon: '🍕' },
+  { id: 'burger',    label: 'Burgers',    icon: '🍔' },
   { id: 'pasticcio', label: 'Pasticcio', icon: '🥧' },
-  { id: 'burger',  label: 'Burger',      icon: '🍔' },
-  { id: 'sandwich',label: 'Sandwich Mega', icon: '🥪' },
+  { id: 'salad',     label: 'Salads',     icon: '🥗' },
 ];
 
 const menuItems = [
-  // PIZZA
-  { id:1, cat:'pizza', name:'Margherita Classique', desc:'Tomato sauce, fresh mozzarella, basil, olive oil drizzle', price:45, badge:'Popular', img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
-  { id:2, cat:'pizza', name:'Pizza 4 Fromages', desc:'Mozzarella, cheddar, gouda, parmesan on creamy base', price:55, badge:'Chef\'s Pick', img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
-  { id:3, cat:'pizza', name:'Pizza Viande Hachée', desc:'Spiced ground meat, peppers, onions & tomato sauce', price:50, img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop' },
+  // ── TACOS ──────────────────────────────────────────────────────────────────
+  { id:1,  cat:'tacos',     name:'Chicken Tacos',         desc:'Grilled chicken, fries, cheese sauce & fresh veggies wrapped in a soft tortilla',                   price:33,  badge:'Popular',     img:'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=250&fit=crop' },
+  { id:2,  cat:'tacos',     name:'Kefta Tacos',           desc:'Spiced ground kefta, fries, cheese sauce & fresh veggies in a flour tortilla',                      price:42,  badge:'Chef\'s Pick', img:'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&h=250&fit=crop' },
+  { id:3,  cat:'tacos',     name:'Chicken Kefta Tacos',   desc:'Combo of grilled chicken & kefta, fries, cheese sauce & veggies',                                   price:30,  badge:'Value',        img:'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=400&h=250&fit=crop' },
+  { id:4,  cat:'tacos',     name:'Mix Tacos',             desc:'Mixed fillings of chicken, kefta & veggies with fries and sauce',                                   price:35,  img:'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=250&fit=crop' },
+  { id:5,  cat:'tacos',     name:'Nuggets Tacos',         desc:'Crispy chicken nuggets, fries, cheese sauce & fresh veggies',                                       price:37,  img:'https://images.unsplash.com/photo-1562802378-063ec186a863?w=400&h=250&fit=crop' },
+  { id:6,  cat:'tacos',     name:'Cordon Bleu Tacos',     desc:'Golden cordon bleu, fries, creamy sauce & veggies in a warm tortilla',                              price:40,  badge:'Special',      img:'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&h=250&fit=crop' },
+  { id:7,  cat:'tacos',     name:'Fries',                 desc:'Crispy golden fries — the perfect side',                                                            price:7,   badge:'Side',         img:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=250&fit=crop' },
+  { id:8,  cat:'tacos',     name:'Crispy Fries',          desc:'Extra-crispy seasoned fries for that satisfying crunch',                                            price:7,   badge:'Side',         img:'https://images.unsplash.com/photo-1576107232684-1279f390859f?w=400&h=250&fit=crop' },
 
-  // CHICKEN
-  { id:4, cat:'chicken', name:'Crispy Chicken Box', desc:'Golden fried chicken thighs, coleslaw & spicy sauce', price:42, badge:'Best Seller', img:'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=250&fit=crop' },
-  { id:5, cat:'chicken', name:'Chicken Strips Combo', desc:'6 strips with dip sauce, fries & drink', price:55, img:'https://images.unsplash.com/photo-1562802378-063ec186a863?w=400&h=250&fit=crop' },
-  { id:6, cat:'chicken', name:'Spicy Crispy Burger', desc:'Crispy chicken fillet, jalapeños, sriracha mayo', price:48, badge:'Spicy 🌶️', img:'https://images.unsplash.com/photo-1614398751058-eb2e0bf63e53?w=400&h=250&fit=crop' },
+  // ── SANDWICHES ─────────────────────────────────────────────────────────────
+  { id:9,  cat:'sandwich',  name:'Chicken Sandwich',      desc:'Grilled chicken, lettuce, tomato & mayo in a fresh baguette',                                       price:25,  badge:'Popular',      img:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=400&h=250&fit=crop' },
+  { id:10, cat:'sandwich',  name:'Tuna Sandwich',         desc:'Seasoned tuna, fresh veggies & sauce in a soft baguette',                                           price:20,  badge:'Value',        img:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=250&fit=crop' },
+  { id:11, cat:'sandwich',  name:'Kefta Sandwich',        desc:'Grilled spiced kefta, harissa, tomato & onion in a baguette',                                       price:30,  img:'https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400&h=250&fit=crop' },
+  { id:12, cat:'sandwich',  name:'Mix Sandwich',          desc:'A hearty mix of fillings — egg, veggies & sauce in a fresh baguette',                               price:22,  img:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=250&fit=crop' },
+  { id:13, cat:'sandwich',  name:'Chicken Kefta Sandwich',desc:'Grilled chicken & kefta combo with fresh toppings in a baguette',                                  price:28,  badge:'Best Deal',    img:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=400&h=250&fit=crop' },
+  { id:14, cat:'sandwich',  name:'Mega Crispy Sandwich',  desc:'Crispy fried chicken fillet, coleslaw & special sauce — fully loaded',                              price:35,  badge:'XXL',          img:'https://images.unsplash.com/photo-1614398751058-eb2e0bf63e53?w=400&h=250&fit=crop' },
 
-  // TACOS
-  { id:7, cat:'tacos', name:'Tacos Viande', desc:'Flour tortilla, spiced beef, fries, cheese sauce, veggies', price:35, badge:'Value', img:'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=250&fit=crop' },
-  { id:8, cat:'tacos', name:'Tacos Poulet', desc:'Grilled chicken, mixed peppers, garlic sauce, fries', price:35, badge:'Popular', img:'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&h=250&fit=crop' },
-  { id:9, cat:'tacos', name:'Maxi Tacos', desc:'Double filling, double cheese, loaded with fries', price:45, img:'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=400&h=250&fit=crop' },
+  // ── PANINI ─────────────────────────────────────────────────────────────────
+  { id:15, cat:'panini',    name:'Tuna Panini',           desc:'Seasoned tuna, melted cheese & veggies in a toasted panini bread',                                  price:18,  badge:'Value',        img:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=250&fit=crop' },
+  { id:16, cat:'panini',    name:'Chicken Panini',        desc:'Grilled chicken, mozzarella & fresh greens pressed to golden perfection',                           price:22,  badge:'Popular',      img:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=400&h=250&fit=crop' },
+  { id:17, cat:'panini',    name:'Kefta Panini',          desc:'Spiced kefta, tomato, onion & cheese grilled in a panini press',                                    price:28,  img:'https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400&h=250&fit=crop' },
+  { id:18, cat:'panini',    name:'Chicken Kefta Panini',  desc:'Chicken & kefta duo with melted cheese and veggies, toasted to perfection',                         price:28,  badge:'Chef\'s Pick', img:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=250&fit=crop' },
+  { id:19, cat:'panini',    name:'Mix Panini',            desc:'A mix of savoury fillings with cheese pressed into crispy panini bread',                            price:22,  img:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=400&h=250&fit=crop' },
 
-  // PASTICCIO
-  { id:10, cat:'pasticcio', name:'Pasticcio Classic', desc:'Layers of pasta, béchamel, spiced meat & cheese topping', price:50, badge:'Signature', img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=250&fit=crop' },
-  { id:11, cat:'pasticcio', name:'Pasticcio Poulet', desc:'Chicken filling, mushrooms, creamy béchamel', price:52, img:'https://images.unsplash.com/photo-1611270629569-8b357cb88da9?w=400&h=250&fit=crop' },
+  // ── PIZZA ──────────────────────────────────────────────────────────────────
+  { id:20, cat:'pizza',     name:'Chicken Pizza (Small)', desc:'Tomato sauce, mozzarella & seasoned grilled chicken — Small',                                       price:30,  img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:21, cat:'pizza',     name:'Chicken Pizza (Medium)',desc:'Tomato sauce, mozzarella & seasoned grilled chicken — Medium',                                      price:40,  badge:'Popular',      img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:22, cat:'pizza',     name:'Tuna Pizza (Small)',    desc:'Tomato sauce, mozzarella & seasoned tuna — Small',                                                  price:30,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
+  { id:23, cat:'pizza',     name:'Tuna Pizza (Medium)',   desc:'Tomato sauce, mozzarella & seasoned tuna — Medium',                                                 price:40,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
+  { id:24, cat:'pizza',     name:'Kefta Pizza (Small)',   desc:'Tomato sauce, mozzarella & spiced ground kefta — Small',                                            price:38,  img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop' },
+  { id:25, cat:'pizza',     name:'Kefta Pizza (Medium)',  desc:'Tomato sauce, mozzarella & spiced ground kefta — Medium',                                           price:48,  badge:'Chef\'s Pick', img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop' },
+  { id:26, cat:'pizza',     name:'Mix Pizza (Small)',     desc:'Chicken, kefta & tuna with tomato sauce & mozzarella — Small',                                      price:33,  img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:27, cat:'pizza',     name:'Mix Pizza (Medium)',    desc:'Chicken, kefta & tuna with tomato sauce & mozzarella — Medium',                                     price:43,  img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:28, cat:'pizza',     name:'Chicken Kefta Pizza (Small)', desc:'Grilled chicken & kefta combo on tomato sauce & mozzarella — Small',                         price:28,  badge:'Value',        img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
+  { id:29, cat:'pizza',     name:'Chicken Kefta Pizza (Medium)', desc:'Grilled chicken & kefta combo on tomato sauce & mozzarella — Medium',                       price:38,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
+  { id:30, cat:'pizza',     name:'Margherita (Small)',    desc:'Classic tomato sauce, fresh mozzarella & basil — Small',                                            price:22,  img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:31, cat:'pizza',     name:'Margherita (Medium)',   desc:'Classic tomato sauce, fresh mozzarella & basil — Medium',                                           price:32,  img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:32, cat:'pizza',     name:'2 Margherita Offer 🎉', desc:'Special deal: two Margherita pizzas for a great price',                                             price:30,  badge:'🔥 Offer',     img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:33, cat:'pizza',     name:'4 Cheese Pizza (Small)',desc:'Mozzarella, cheddar, gouda & parmesan on a creamy base — Small',                                   price:33,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
+  { id:34, cat:'pizza',     name:'4 Cheese Pizza (Medium)',desc:'Mozzarella, cheddar, gouda & parmesan on a creamy base — Medium',                                 price:43,  badge:'Popular',      img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=250&fit=crop' },
+  { id:35, cat:'pizza',     name:'Seafood Pizza (Small)', desc:'Shrimp, calamari & seafood mix on tomato sauce & mozzarella — Small',                              price:40,  img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop' },
+  { id:36, cat:'pizza',     name:'Seafood Pizza (Medium)',desc:'Shrimp, calamari & seafood mix on tomato sauce & mozzarella — Medium',                             price:50,  badge:'Premium',      img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop' },
+  { id:37, cat:'pizza',     name:'4 Seasons Pizza (Small)', desc:'Four quarters: chicken, kefta, tuna & veggies on tomato & mozzarella — Small',                  price:40,  img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
+  { id:38, cat:'pizza',     name:'4 Seasons Pizza (Medium)', desc:'Four quarters: chicken, kefta, tuna & veggies on tomato & mozzarella — Medium',                price:50,  badge:'Signature',    img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=250&fit=crop' },
 
-  // BURGER
-  { id:12, cat:'burger', name:'MegaMed Classic Burger', desc:'Smash beef patty, cheddar, pickles, special sauce, brioche bun', price:45, badge:'Our Classic', img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=250&fit=crop' },
-  { id:13, cat:'burger', name:'Double Smash', desc:'Two smash patties, double cheese, caramelised onions', price:60, badge:'XXL', img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&h=250&fit=crop' },
-  { id:14, cat:'burger', name:'Veggie Burger', desc:'Plant-based patty, avocado, fresh tomato, tahini sauce', price:40, img:'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&h=250&fit=crop' },
+  // ── BURGERS ────────────────────────────────────────────────────────────────
+  { id:39, cat:'burger',    name:'Double Kefta Burger',   desc:'Two spiced kefta patties, cheddar, pickles & special sauce in a brioche bun',                      price:45,  badge:'Best Seller',  img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=250&fit=crop' },
+  { id:40, cat:'burger',    name:'Crispy Burger',         desc:'Golden crispy chicken fillet, coleslaw & sriracha mayo in a toasted bun',                          price:40,  badge:'Popular',      img:'https://images.unsplash.com/photo-1614398751058-eb2e0bf63e53?w=400&h=250&fit=crop' },
+  { id:41, cat:'burger',    name:'Simple Kefta Burger',   desc:'Classic kefta patty, lettuce, tomato & house sauce in a soft bun',                                 price:38,  badge:'Value',        img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&h=250&fit=crop' },
 
-  // SANDWICH
-  { id:15, cat:'sandwich', name:'Sandwich Mega Viande', desc:'Baguette, grilled beef, harissa, veggies, fries inside', price:30, badge:'Best Deal', img:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=250&fit=crop' },
-  { id:16, cat:'sandwich', name:'Sandwich Mega Poulet', desc:'Baguette, grilled chicken, mayo, lettuce, tomato, fries', price:28, img:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=400&h=250&fit=crop' },
-  { id:17, cat:'sandwich', name:'Sandwich Mixte', desc:'Egg, kefta, cheese & fresh veggies — fully loaded', price:32, img:'https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400&h=250&fit=crop' },
+  // ── PASTICCIO ──────────────────────────────────────────────────────────────
+  { id:42, cat:'pasticcio', name:'Chicken Pasticcio',     desc:'Layers of pasta, béchamel & seasoned grilled chicken, baked to perfection',                        price:35,  badge:'Popular',      img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=250&fit=crop' },
+  { id:43, cat:'pasticcio', name:'Kefta Pasticcio',       desc:'Layers of pasta, béchamel & spiced kefta, baked golden',                                           price:45,  badge:'Chef\'s Pick', img:'https://images.unsplash.com/photo-1611270629569-8b357cb88da9?w=400&h=250&fit=crop' },
+  { id:44, cat:'pasticcio', name:'Chicken Kefta Pasticcio', desc:'Pasta bake with a duo of grilled chicken & kefta in creamy béchamel',                            price:33,  badge:'Value',        img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=250&fit=crop' },
+  { id:45, cat:'pasticcio', name:'Mix Pasticcio',         desc:'A hearty pasta bake with mixed fillings & creamy béchamel topping',                                price:40,  img:'https://images.unsplash.com/photo-1611270629569-8b357cb88da9?w=400&h=250&fit=crop' },
+  { id:46, cat:'pasticcio', name:'Gratin Pasticcio',      desc:'Classic pasta gratin with golden cheese crust & creamy béchamel',                                  price:33,  img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=250&fit=crop' },
+  { id:47, cat:'pasticcio', name:'Cordon Bleu Pasticcio', desc:'Pasta bake with golden cordon bleu & creamy béchamel sauce',                                       price:40,  badge:'Special',      img:'https://images.unsplash.com/photo-1611270629569-8b357cb88da9?w=400&h=250&fit=crop' },
+  { id:48, cat:'pasticcio', name:'Nuggets Pasticcio',     desc:'Pasta bake topped with crispy chicken nuggets & béchamel',                                         price:38,  img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=250&fit=crop' },
+
+  // ── SALADS ─────────────────────────────────────────────────────────────────
+  { id:49, cat:'salad',     name:'Caesar Salad',          desc:'Crisp romaine lettuce, croutons, parmesan & creamy Caesar dressing',                               price:37,  badge:'Fresh',        img:'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=250&fit=crop' },
 ];
 
 const reviews = [
   { name:'Youssef A.', loc:'Kenitra', stars:5, text:'Best tacos in the city! Fast delivery and always hot. MegaMed is my go-to every week.' },
-  { name:'Fatima Z.', loc:'Kenitra', stars:5, text:'The crispy chicken is absolutely incredible. Crispy on the outside, juicy inside. Worth every dirham!' },
-  { name:'Mohamed K.', loc:'Kenitra', stars:5, text:'Ordered the double smash burger and it was fire 🔥. Great quality at a great price. Highly recommend!' },
-  { name:'Sara B.', loc:'Kenitra', stars:5, text:'The pasticcio is so comforting and delicious. Generous portions and good price. Will order again!' },
-  { name:'Hamid T.', loc:'Kenitra', stars:4, text:'Sandwich mega is a classic — filling, tasty and affordable. My lunch spot every day near work.' },
-  { name:'Nora R.', loc:'Kenitra', stars:5, text:'Ordered via WhatsApp, was super easy. Food arrived in 25 min and everything was perfect. 👏' },
+  { name:'Fatima Z.',  loc:'Kenitra', stars:5, text:'The crispy chicken is absolutely incredible. Crispy on the outside, juicy inside. Worth every dirham!' },
+  { name:'Mohamed K.', loc:'Kenitra', stars:5, text:'Ordered the double kefta burger and it was fire 🔥. Great quality at a great price. Highly recommend!' },
+  { name:'Sara B.',    loc:'Kenitra', stars:5, text:'The pasticcio is so comforting and delicious. Generous portions and good price. Will order again!' },
+  { name:'Hamid T.',   loc:'Kenitra', stars:4, text:'The panini and sandwich are a classic — filling, tasty and affordable. My lunch spot every day.' },
+  { name:'Nora R.',    loc:'Kenitra', stars:5, text:'Ordered via WhatsApp, was super easy. Food arrived in 25 min and everything was perfect. 👏' },
 ];
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let cart = [];
 let activeCategory = 'all';
-let quantities = {}; // per card qty selector
+let quantities = {};
 
 // ─── RENDER TABS ─────────────────────────────────────────────────────────────
 function renderTabs() {
@@ -878,7 +912,7 @@ function renderMenu() {
         <div class="food-name">${item.name}</div>
         <div class="food-desc">${item.desc}</div>
         <div class="food-bottom">
-          <div class="food-price">${item.price} <small>MAD</small></div>
+          <div class="food-price">${item.price} <small>DH</small></div>
           <div class="qty-control">
             <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
             <span class="qty-num" id="qty-${item.id}">${q}</span>
@@ -913,7 +947,6 @@ function addToCart(id) {
   const qtyEl = document.getElementById(`qty-${id}`);
   if (qtyEl) qtyEl.textContent = 1;
 
-  // Flash button
   const btn = document.getElementById(`addbtn-${id}`);
   if (btn) {
     btn.classList.add('added');
@@ -944,7 +977,7 @@ function updateCartUI() {
   const badge = document.getElementById('cartBadge');
   badge.textContent = count;
   badge.classList.toggle('show', count > 0);
-  document.getElementById('cartTotal').textContent = `${total} MAD`;
+  document.getElementById('cartTotal').textContent = `${total} DH`;
   document.getElementById('cartFooter').style.display = cart.length ? 'block' : 'none';
 }
 
@@ -959,7 +992,7 @@ function renderCartItems() {
       <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">${item.price * item.qty} MAD</div>
+        <div class="cart-item-price">${item.price * item.qty} DH</div>
         <div class="cart-item-ctrl">
           <button class="qty-btn" onclick="changeCartQty(${item.id}, -1)">−</button>
           <span class="qty-num">${item.qty}</span>
@@ -984,12 +1017,12 @@ function closeCart() {
   document.body.style.overflow = '';
 }
 
-// ─── WHATSAPP ORDER ─────────────────────────────────────────────────────────
+// ─── WHATSAPP ORDER ──────────────────────────────────────────────────────────
 function orderWhatsApp() {
   if (!cart.length) return;
-  const lines = cart.map(i => `• ${i.name} x${i.qty} = ${i.price * i.qty} MAD`).join('\n');
+  const lines = cart.map(i => `• ${i.name} x${i.qty} = ${i.price * i.qty} DH`).join('\n');
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const msg = encodeURIComponent(`🍕 *MegaMed Snack Order*\n\n${lines}\n\n*Total: ${total} MAD*\n\nMerci! 🙏`);
+  const msg = encodeURIComponent(`🍕 *MegaMed Snack Order*\n\n${lines}\n\n*Total: ${total} DH*\n\nMerci! 🙏`);
   window.open(`https://wa.me/212717989955?text=${msg}`, '_blank');
 }
 
